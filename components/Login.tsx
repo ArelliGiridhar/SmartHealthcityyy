@@ -4,40 +4,40 @@ import { User } from '../types';
 
 interface LoginProps {
   role: 'citizen' | 'admin';
-  onLogin: (role: 'citizen' | 'admin', userId?: string) => void;
+  onLogin: (role: 'citizen' | 'admin', user: User) => void;
   onGoToSignup: () => void;
   onBackToRoles: () => void;
 }
 
 const Login: React.FC<LoginProps> = ({ role, onLogin, onGoToSignup, onBackToRoles }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
-    const usersRaw = localStorage.getItem('smart_city_users');
-    const users: User[] = usersRaw ? JSON.parse(usersRaw) : [];
-    
-    const foundUser = users.find(u => 
-      u.email === username && 
-      u.passwordHash === password && 
-      u.role === role
-    );
+    // Artificial delay for UI feel
+    setTimeout(() => {
+      const usersRaw = localStorage.getItem('smart_city_users');
+      const users: User[] = usersRaw ? JSON.parse(usersRaw) : [];
+      
+      const foundUser = users.find(u => 
+        u.email.toLowerCase() === email.toLowerCase() && 
+        u.passwordHash === password && 
+        u.role === role
+      );
 
-    if (foundUser) {
-      onLogin(role, foundUser.id);
-    } else {
-      if (role === 'admin' && username === 'admin@ghmc.gov.in' && password === 'admin123') {
-        onLogin('admin', 'demo-admin');
-      } else if (role === 'citizen' && username === 'citizen@gmail.com' && password === 'citizen123') {
-        onLogin('citizen', 'demo-citizen');
+      if (foundUser) {
+        onLogin(role, foundUser);
       } else {
-        setError(`Invalid access credentials. Ensure your ${role === 'admin' ? 'Officer @ghmc.gov.in email' : 'registered email'} is correct.`);
+        setError(`Invalid credentials. No ${role} account found with these details.`);
       }
-    }
+      setIsLoading(false);
+    }, 800);
   };
 
   return (
@@ -53,28 +53,28 @@ const Login: React.FC<LoginProps> = ({ role, onLogin, onGoToSignup, onBackToRole
           <h1 className="text-3xl font-black tracking-tight heading-font">
             {role === 'admin' ? 'Officer Access' : 'Citizen Access'}
           </h1>
-          <p className="text-blue-100 opacity-80 mt-2 font-black uppercase tracking-[0.2em] text-[10px]">Localized Governance Console</p>
+          <p className="text-blue-100 opacity-80 mt-2 font-black uppercase tracking-[0.2em] text-[10px]">Secure Local Portal</p>
         </div>
 
         <div className="p-12">
           <form onSubmit={handleLogin} className="space-y-8">
             <div className="space-y-2">
-              <label className="block text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] mb-2 ml-1">Official Identifier</label>
+              <label className="block text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] mb-2 ml-1">Account Email</label>
               <div className="relative group">
-                <i className="fas fa-id-card absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors"></i>
+                <i className="fas fa-envelope absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors"></i>
                 <input
                   type="email"
                   required
                   className="w-full pl-16 pr-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 shadow-sm"
-                  placeholder={role === 'admin' ? "id@ghmc.gov.in" : "name@gmail.com"}
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="name@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="block text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] mb-2 ml-1">Secure Passkey</label>
+              <label className="block text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] mb-2 ml-1">Passkey</label>
               <div className="relative group">
                 <i className="fas fa-key absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors"></i>
                 <input
@@ -97,9 +97,10 @@ const Login: React.FC<LoginProps> = ({ role, onLogin, onGoToSignup, onBackToRole
 
             <button
               type="submit"
-              className={`w-full py-6 ${role === 'admin' ? 'bg-slate-900 hover:bg-black' : 'bg-blue-600 hover:bg-blue-700'} text-white font-black text-xs uppercase tracking-[0.4em] rounded-[2rem] shadow-2xl transition-all active:scale-[0.98] mt-4`}
+              disabled={isLoading}
+              className={`w-full py-6 ${role === 'admin' ? 'bg-slate-900 hover:bg-black' : 'bg-blue-600 hover:bg-blue-700'} text-white font-black text-xs uppercase tracking-[0.4em] rounded-[2rem] shadow-2xl transition-all active:scale-[0.98] mt-4 flex items-center justify-center gap-4`}
             >
-              Sign In
+              {isLoading ? <i className="fas fa-spinner fa-spin"></i> : "Sign In"}
             </button>
           </form>
 

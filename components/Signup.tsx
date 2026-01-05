@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { User, INDIAN_STATES, STATE_CITIES } from '../types';
+import { INDIAN_STATES, STATE_CITIES, User } from '../types';
 
 interface SignupProps {
   role: 'citizen' | 'admin';
@@ -32,38 +32,28 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ 
-      ...prev, 
-      [name]: value,
-      ...(name === 'state' ? { city: '' } : {})
-    }));
+    setFormData(prev => ({ ...prev, [name]: value, ...(name === 'state' ? { city: '' } : {}) }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (role === 'admin' && !formData.email.toLowerCase().endsWith('@ghmc.gov.in')) {
-      setError("Administrative network access requires an official @ghmc.gov.in email identity.");
-      return;
-    }
-
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
 
-    if (!formData.state || !formData.city) {
-      setError("State and City are mandatory.");
-      return;
-    }
-
-    if (role === 'admin' && !formData.employeeId) {
-      setError("Officer Employee Unique Identification is required.");
-      return;
-    }
-
     setIsSubmitting(true);
+    
+    // Check if email already exists locally
+    const usersRaw = localStorage.getItem('smart_city_users');
+    const users: User[] = usersRaw ? JSON.parse(usersRaw) : [];
+    if (users.some(u => u.email.toLowerCase() === formData.email.toLowerCase())) {
+      setError("An account with this email already exists.");
+      setIsSubmitting(false);
+      return;
+    }
 
     setTimeout(() => {
       const newUser: User = {
@@ -77,10 +67,11 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
         employeeId: role === 'admin' ? formData.employeeId : undefined,
         mobile: formData.mobile,
         email: formData.email,
-        passwordHash: formData.password,
+        passwordHash: formData.password, // Storing in plain text for this local mock version
         role: role,
         points: 0
       };
+
       onSignup(newUser);
       setIsSubmitting(false);
     }, 1000);
@@ -99,7 +90,7 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
           <h1 className="text-4xl font-black tracking-tight heading-font">
             {role === 'admin' ? 'Officer Registration' : 'Citizen Signup'}
           </h1>
-          <p className="text-blue-100 opacity-80 mt-2 font-black uppercase tracking-[0.3em] text-[10px]">Initialize Secure Official Identity</p>
+          <p className="text-blue-100 opacity-80 mt-2 font-black uppercase tracking-[0.3em] text-[10px]">Localized Identity Creation</p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-12 space-y-10">
@@ -132,10 +123,7 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
             {role === 'admin' && (
               <div className="md:col-span-2 space-y-2">
                 <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Officer Unique Token</label>
-                <div className="relative group">
-                  <i className="fas fa-id-card-clip absolute left-7 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors"></i>
-                  <input type="text" name="employeeId" placeholder="ID-XXXXXXXX" required className="w-full pl-16 pr-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.employeeId} onChange={handleChange} />
-                </div>
+                <input type="text" name="employeeId" placeholder="ID-XXXXXXXX" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.employeeId} onChange={handleChange} />
               </div>
             )}
 
@@ -147,13 +135,6 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
               <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Email Address</label>
               <input type="email" name="email" placeholder="Email Address" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.email} onChange={handleChange} />
             </div>
-
-            {role === 'citizen' && (
-              <div className="md:col-span-2 space-y-2">
-                <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Residential Physical Address</label>
-                <textarea name="address" placeholder="Full permanent address for official logs" required className="w-full px-8 py-6 bg-slate-50 border-2 border-slate-200 rounded-[2.5rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all h-32 resize-none shadow-sm" value={formData.address} onChange={handleChange} />
-              </div>
-            )}
 
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Password</label>
@@ -178,19 +159,9 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
               disabled={isSubmitting}
               className={`w-full py-6 ${role === 'admin' ? 'bg-slate-900 hover:bg-black' : 'bg-blue-600 hover:bg-blue-700'} text-white font-black text-xs uppercase tracking-[0.4em] rounded-[2.5rem] shadow-2xl transition-all active:scale-[0.98] flex items-center justify-center gap-4 heading-font`}
             >
-              {isSubmitting ? (
-                <><i className="fas fa-circle-notch fa-spin"></i> Signing Up...</>
-              ) : (
-                <><i className="fas fa-shield-halved"></i> Sign Up</>
-              )}
+              {isSubmitting ? <i className="fas fa-circle-notch fa-spin"></i> : "Sign Up"}
             </button>
-            <button
-              type="button"
-              onClick={onBackToLogin}
-              className="w-full py-3 text-slate-700 font-black uppercase tracking-[0.3em] hover:text-slate-900 transition-all text-[10px] active:scale-95"
-            >
-              Back to Sign In
-            </button>
+            <button type="button" onClick={onBackToLogin} className="w-full py-3 text-slate-700 font-black uppercase tracking-[0.3em] hover:text-slate-900 transition-all text-[10px]">Back to Sign In</button>
           </div>
         </form>
       </div>
