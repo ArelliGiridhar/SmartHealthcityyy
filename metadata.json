@@ -1,0 +1,8 @@
+{
+  "name": "Smart City Complaint Management System",
+  "description": "A centralized digital platform for citizens to report urban infrastructure issues with AI-powered image verification and real-time status tracking.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
