@@ -17,9 +17,9 @@ const Header: React.FC<HeaderProps> = ({ currentView, user, onLogout }) => {
             <i className="fas fa-city text-xl"></i>
           </div>
           <div className="hidden sm:block">
-            <span className="font-bold text-xl tracking-tight text-slate-800 block leading-tight">SmartCity</span>
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-tight">
-              {user?.role === 'admin' ? 'Admin Control' : 'Citizen Portal'}
+            <span className="font-bold text-xl tracking-tight text-slate-900 block leading-tight">Smart City</span>
+            <span className="text-[10px] font-black text-slate-700 uppercase tracking-widest leading-tight">
+              {user?.role === 'admin' ? 'Officer Portal' : 'Citizen Portal'}
             </span>
           </div>
         </div>
@@ -30,21 +30,21 @@ const Header: React.FC<HeaderProps> = ({ currentView, user, onLogout }) => {
               <img 
                 src={user.profileImage} 
                 alt="Profile" 
-                className="w-8 h-8 rounded-full object-cover border border-slate-200"
+                className="w-8 h-8 rounded-full object-cover border border-slate-300"
               />
             ) : (
-              <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 text-sm">
+              <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-700 text-sm">
                 <i className={`fas ${user?.role === 'admin' ? 'fa-user-shield' : 'fa-user'}`}></i>
               </div>
             )}
-            <span className="text-sm font-semibold text-slate-700 capitalize hidden md:inline">
-              {user?.role}
+            <span className="text-sm font-black text-slate-900 capitalize hidden md:inline">
+              {user?.role === 'admin' ? 'Officer' : 'Citizen'}
             </span>
           </div>
 
           <button
             onClick={onLogout}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl transition-all"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-black text-red-600 hover:bg-red-50 rounded-xl transition-all"
           >
             <i className="fas fa-right-from-bracket"></i>
             <span className="hidden sm:inline">Logout</span>

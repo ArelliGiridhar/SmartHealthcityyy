@@ -59,7 +59,7 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
     }
 
     if (role === 'admin' && !formData.employeeId) {
-      setError("GHMC Employee Unique Identification is required.");
+      setError("Officer Employee Unique Identification is required.");
       return;
     }
 
@@ -87,7 +87,7 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 py-16 animate-fadeIn">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 py-16 animate-fadeIn modern-form-font">
       <div className="max-w-3xl w-full bg-white rounded-[4rem] shadow-2xl border border-slate-100 overflow-hidden">
         <div className={`${role === 'admin' ? 'bg-slate-900' : 'bg-blue-600'} p-12 text-center text-white relative`}>
            <button onClick={onBackToLogin} className="absolute left-10 top-12 text-white/50 hover:text-white transition-all hover:scale-110">
@@ -96,8 +96,8 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
           <div className="inline-block p-6 bg-white/20 rounded-[2.5rem] mb-6 backdrop-blur-md">
             <i className={`fas ${role === 'admin' ? 'fa-shield-halved' : 'fa-user-plus'} text-4xl`}></i>
           </div>
-          <h1 className="text-4xl font-black tracking-tight">
-            {role === 'admin' ? 'Admin Registration' : 'Citizen Signup'}
+          <h1 className="text-4xl font-black tracking-tight heading-font">
+            {role === 'admin' ? 'Officer Registration' : 'Citizen Signup'}
           </h1>
           <p className="text-blue-100 opacity-80 mt-2 font-black uppercase tracking-[0.3em] text-[10px]">Initialize Secure Official Identity</p>
         </div>
@@ -105,25 +105,25 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
         <form onSubmit={handleSubmit} className="p-12 space-y-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">First Name</label>
-              <input type="text" name="name" placeholder="First Name" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.name} onChange={handleChange} />
+              <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">First Name</label>
+              <input type="text" name="name" placeholder="First Name" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.name} onChange={handleChange} />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Sur Name</label>
-              <input type="text" name="surname" placeholder="Sur Name" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.surname} onChange={handleChange} />
+              <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Sur Name</label>
+              <input type="text" name="surname" placeholder="Sur Name" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.surname} onChange={handleChange} />
             </div>
             
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Select State</label>
-              <select name="state" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all appearance-none cursor-pointer" value={formData.state} onChange={handleChange}>
+              <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Select State</label>
+              <select name="state" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all appearance-none cursor-pointer" value={formData.state} onChange={handleChange}>
                 <option value="">Select State</option>
                 {INDIAN_STATES.map(s => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
             
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Select City</label>
-              <select name="city" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all appearance-none cursor-pointer disabled:opacity-50" value={formData.city} onChange={handleChange} disabled={!formData.state}>
+              <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Select City</label>
+              <select name="city" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all appearance-none cursor-pointer disabled:opacity-50" value={formData.city} onChange={handleChange} disabled={!formData.state}>
                 <option value="">Select City</option>
                 {availableCities.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
@@ -131,42 +131,42 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
 
             {role === 'admin' && (
               <div className="md:col-span-2 space-y-2">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">GHMC Unique Employee Token</label>
+                <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Officer Unique Token</label>
                 <div className="relative group">
-                  <i className="fas fa-id-card-clip absolute left-7 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-blue-500 transition-colors"></i>
-                  <input type="text" name="employeeId" placeholder="GHMC-XXXXXXXX" required className="w-full pl-16 pr-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.employeeId} onChange={handleChange} />
+                  <i className="fas fa-id-card-clip absolute left-7 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors"></i>
+                  <input type="text" name="employeeId" placeholder="ID-XXXXXXXX" required className="w-full pl-16 pr-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.employeeId} onChange={handleChange} />
                 </div>
               </div>
             )}
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Mobile Number</label>
-              <input type="tel" name="mobile" placeholder="Mobile Number" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.mobile} onChange={handleChange} />
+              <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Mobile Number</label>
+              <input type="tel" name="mobile" placeholder="Mobile Number" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.mobile} onChange={handleChange} />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Email Address</label>
-              <input type="email" name="email" placeholder="Email Address" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.email} onChange={handleChange} />
+              <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Email Address</label>
+              <input type="email" name="email" placeholder="Email Address" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.email} onChange={handleChange} />
             </div>
 
             {role === 'citizen' && (
               <div className="md:col-span-2 space-y-2">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Residential Physical Address</label>
-                <textarea name="address" placeholder="Full permanent address for official logs" required className="w-full px-8 py-6 bg-slate-50 border-2 border-slate-100 rounded-[2.5rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all h-32 resize-none shadow-sm" value={formData.address} onChange={handleChange} />
+                <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Residential Physical Address</label>
+                <textarea name="address" placeholder="Full permanent address for official logs" required className="w-full px-8 py-6 bg-slate-50 border-2 border-slate-200 rounded-[2.5rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all h-32 resize-none shadow-sm" value={formData.address} onChange={handleChange} />
               </div>
             )}
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Password</label>
-              <input type="password" name="password" placeholder="Password" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.password} onChange={handleChange} />
+              <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Password</label>
+              <input type="password" name="password" placeholder="Password" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.password} onChange={handleChange} />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Confirm Password</label>
-              <input type="password" name="confirmPassword" placeholder="Confirm Password" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.confirmPassword} onChange={handleChange} />
+              <label className="text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] ml-2">Confirm Password</label>
+              <input type="password" name="confirmPassword" placeholder="Confirm Password" required className="w-full px-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-bold outline-none transition-all shadow-sm" value={formData.confirmPassword} onChange={handleChange} />
             </div>
           </div>
 
           {error && (
-            <div className="p-6 bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-[2rem] border border-red-100 flex items-center gap-4 animate-shake">
+            <div className="p-6 bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-[2rem] border border-red-200 flex items-center gap-4 animate-shake">
               <i className="fas fa-triangle-exclamation text-lg"></i>
               <span>{error}</span>
             </div>
@@ -176,7 +176,7 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full py-6 ${role === 'admin' ? 'bg-slate-900 hover:bg-black' : 'bg-blue-600 hover:bg-blue-700'} text-white font-black text-xs uppercase tracking-[0.4em] rounded-[2.5rem] shadow-2xl transition-all active:scale-[0.98] flex items-center justify-center gap-4`}
+              className={`w-full py-6 ${role === 'admin' ? 'bg-slate-900 hover:bg-black' : 'bg-blue-600 hover:bg-blue-700'} text-white font-black text-xs uppercase tracking-[0.4em] rounded-[2.5rem] shadow-2xl transition-all active:scale-[0.98] flex items-center justify-center gap-4 heading-font`}
             >
               {isSubmitting ? (
                 <><i className="fas fa-circle-notch fa-spin"></i> Signing Up...</>
@@ -187,7 +187,7 @@ const Signup: React.FC<SignupProps> = ({ role, onSignup, onBackToLogin }) => {
             <button
               type="button"
               onClick={onBackToLogin}
-              className="w-full py-3 text-slate-400 font-black uppercase tracking-[0.3em] hover:text-slate-800 transition-all text-[10px] active:scale-95"
+              className="w-full py-3 text-slate-700 font-black uppercase tracking-[0.3em] hover:text-slate-900 transition-all text-[10px] active:scale-95"
             >
               Back to Sign In
             </button>

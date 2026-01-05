@@ -35,13 +35,13 @@ const Login: React.FC<LoginProps> = ({ role, onLogin, onGoToSignup, onBackToRole
       } else if (role === 'citizen' && username === 'citizen@gmail.com' && password === 'citizen123') {
         onLogin('citizen', 'demo-citizen');
       } else {
-        setError(`Invalid access credentials. Ensure your ${role === 'admin' ? '@ghmc.gov.in email' : 'registered email'} is correct.`);
+        setError(`Invalid access credentials. Ensure your ${role === 'admin' ? 'Officer @ghmc.gov.in email' : 'registered email'} is correct.`);
       }
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 modern-form-font">
       <div className="max-w-md w-full bg-white rounded-[3.5rem] shadow-2xl border border-slate-100 overflow-hidden animate-fadeIn">
         <div className={`${role === 'admin' ? 'bg-slate-900' : 'bg-blue-600'} p-12 text-center text-white relative`}>
           <button onClick={onBackToRoles} className="absolute left-8 top-10 text-white/50 hover:text-white transition-all hover:scale-110 active:scale-90">
@@ -50,8 +50,8 @@ const Login: React.FC<LoginProps> = ({ role, onLogin, onGoToSignup, onBackToRole
           <div className="inline-block p-5 bg-white/20 rounded-[2rem] mb-6 backdrop-blur-md shadow-xl">
             <i className={`fas ${role === 'admin' ? 'fa-shield-halved' : 'fa-user-check'} text-4xl`}></i>
           </div>
-          <h1 className="text-3xl font-black tracking-tight">
-            {role === 'admin' ? 'Admin Access' : 'Citizen Access'}
+          <h1 className="text-3xl font-black tracking-tight heading-font">
+            {role === 'admin' ? 'Officer Access' : 'Citizen Access'}
           </h1>
           <p className="text-blue-100 opacity-80 mt-2 font-black uppercase tracking-[0.2em] text-[10px]">Localized Governance Console</p>
         </div>
@@ -59,13 +59,13 @@ const Login: React.FC<LoginProps> = ({ role, onLogin, onGoToSignup, onBackToRole
         <div className="p-12">
           <form onSubmit={handleLogin} className="space-y-8">
             <div className="space-y-2">
-              <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 ml-1">Official Identifier</label>
+              <label className="block text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] mb-2 ml-1">Official Identifier</label>
               <div className="relative group">
-                <i className="fas fa-id-card absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-blue-500 transition-colors"></i>
+                <i className="fas fa-id-card absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors"></i>
                 <input
                   type="email"
                   required
-                  className="w-full pl-16 pr-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all font-bold text-slate-700 shadow-sm"
+                  className="w-full pl-16 pr-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 shadow-sm"
                   placeholder={role === 'admin' ? "id@ghmc.gov.in" : "name@gmail.com"}
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -74,13 +74,13 @@ const Login: React.FC<LoginProps> = ({ role, onLogin, onGoToSignup, onBackToRole
             </div>
 
             <div className="space-y-2">
-              <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 ml-1">Secure Passkey</label>
+              <label className="block text-[10px] font-black text-slate-800 uppercase tracking-[0.3em] mb-2 ml-1">Secure Passkey</label>
               <div className="relative group">
-                <i className="fas fa-key absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-blue-500 transition-colors"></i>
+                <i className="fas fa-key absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors"></i>
                 <input
                   type="password"
                   required
-                  className="w-full pl-16 pr-8 py-5 bg-slate-50 border-2 border-slate-100 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all font-bold text-slate-700 shadow-sm"
+                  className="w-full pl-16 pr-8 py-5 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 shadow-sm"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -89,7 +89,7 @@ const Login: React.FC<LoginProps> = ({ role, onLogin, onGoToSignup, onBackToRole
             </div>
 
             {error && (
-              <div className="p-5 bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl border border-red-100 flex items-center gap-4 animate-shake">
+              <div className="p-5 bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl border border-red-200 flex items-center gap-4 animate-shake">
                 <i className="fas fa-circle-exclamation text-base"></i>
                 <span className="leading-tight">{error}</span>
               </div>
@@ -103,10 +103,10 @@ const Login: React.FC<LoginProps> = ({ role, onLogin, onGoToSignup, onBackToRole
             </button>
           </form>
 
-          <div className="mt-12 pt-10 border-t border-slate-50 text-center">
+          <div className="mt-12 pt-10 border-t border-slate-100 text-center">
             <button 
               onClick={onGoToSignup}
-              className={`text-[10px] font-black uppercase tracking-[0.3em] ${role === 'admin' ? 'text-slate-500' : 'text-blue-600'} hover:opacity-70 transition-opacity active:scale-95`}
+              className={`text-[10px] font-black uppercase tracking-[0.3em] ${role === 'admin' ? 'text-slate-800' : 'text-blue-600'} hover:opacity-70 transition-opacity active:scale-95`}
             >
               New User ? Sign Up
             </button>

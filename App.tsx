@@ -150,8 +150,8 @@ const App: React.FC = () => {
               <div className="w-24 h-24 bg-blue-100 rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <i className="fas fa-users text-4xl text-blue-600"></i>
               </div>
-              <h2 className="text-3xl font-black text-slate-900 mb-2">Citizen Portal</h2>
-              <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Report Issues & Earn Rewards</p>
+              <h2 className="text-3xl font-black text-slate-900 mb-2">Citizen</h2>
+              <p className="text-slate-700 font-bold uppercase tracking-widest text-xs">Report Issues & Earn Rewards</p>
               <div className="mt-8 px-8 py-3 bg-blue-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest group-hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">Get Started</div>
             </button>
             <button 
@@ -161,8 +161,8 @@ const App: React.FC = () => {
               <div className="w-24 h-24 bg-slate-100 rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <i className="fas fa-shield-halved text-4xl text-slate-800"></i>
               </div>
-              <h2 className="text-3xl font-black text-slate-900 mb-2">Admin Portal</h2>
-              <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Control Center & Duty Management</p>
+              <h2 className="text-3xl font-black text-slate-900 mb-2">Officer</h2>
+              <p className="text-slate-700 font-bold uppercase tracking-widest text-xs">Control Center & Duty Management</p>
               <div className="mt-8 px-8 py-3 bg-slate-900 text-white rounded-2xl font-black text-sm uppercase tracking-widest group-hover:bg-black transition-colors shadow-lg shadow-slate-200">Access Console</div>
             </button>
           </div>
@@ -172,14 +172,14 @@ const App: React.FC = () => {
 
     return view === 'login' ? (
       <Login 
-        role={appRole} 
+        role={appRole === 'admin' ? 'admin' : 'citizen'} 
         onLogin={handleLogin} 
         onGoToSignup={() => setView('signup')} 
         onBackToRoles={() => setAppRole(null)} 
       />
     ) : (
       <Signup 
-        role={appRole} 
+        role={appRole === 'admin' ? 'admin' : 'citizen'} 
         onSignup={handleSignup} 
         onBackToLogin={() => setView('login')} 
       />
@@ -199,7 +199,7 @@ const App: React.FC = () => {
           <div className="max-w-4xl mx-auto">
             <div className="mb-10 text-center animate-fadeIn">
               <h1 className="text-4xl font-black text-slate-900 mb-2">Voice Of {currentUser.city}</h1>
-              <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Bridging infrastructure gaps in {currentUser.state}</p>
+              <p className="text-sm font-bold text-slate-700 uppercase tracking-widest">Bridging infrastructure gaps in {currentUser.state}</p>
             </div>
             <CitizenForm 
               onSubmission={(c) => setComplaints(p => [c, ...p])} 
@@ -225,7 +225,7 @@ const App: React.FC = () => {
              <i className="fas fa-city text-blue-500 text-2xl"></i>
              <span className="font-black text-2xl tracking-tighter">Smart City</span>
           </div>
-          <p className="text-slate-500 text-sm max-w-md mx-auto">Localized governance powered by GHMC Official Network for {currentUser?.state || 'a better tomorrow'}.</p>
+          <p className="text-slate-300 text-sm max-w-md mx-auto">Localized governance powered by GHMC Official Network for {currentUser?.state || 'a better tomorrow'}.</p>
         </div>
       </footer>
     </div>
